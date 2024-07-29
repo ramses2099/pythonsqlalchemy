@@ -1,43 +1,41 @@
 from sqlalchemy import create_engine
-from models import Base, User, Address
+from models import *
 from sqlalchemy.orm import Session
 from sqlalchemy import select
+from style import Style
 
 
 def main():
+    # connection string for postgres db
+    # url_postgress ="postgresql+psycopg2://postgres:S3cret@10.0.0.50:5432/mydatabase"
+    # connection string for sqlite
+    url_sqlilte = "sqlite:///database.db"
+    
     # create engine
-    engine = create_engine("sqlite:///database.db", echo=True)
+    engine = create_engine(url_sqlilte, echo=True)
 
     # create database and all table
     Base.metadata.create_all(engine)
 
     # insert rows
     # with Session(engine) as session:
-    #     row1 = User(
+    #     user1 = User(
     #         name="spongebob",
-    #         fullname="Spongebob Squarepants",
-    #         addresses=[Address(email_address="spongebob@sqlalchemy.org")],
+    #         fullname="Spongebob Squarepants"                       
     #     )
-
-    #     row2 = User(
-    #         name="ramses",
-    #         fullname="ramses the first",
-    #         addresses=[
-    #             Address(email_address="ramses@sqlalchemy.org"),
-    #             Address(email_address="ramses@sqlalchemy.org"),
-    #         ],
-    #     )
-
-    #     row3 = User(name="antonio", fullname="antonio the second")
-
-    #     session.add_all([row1, row2, row3])
-
+    #     # insert profile
+    #     profile1 = Profile(name = "admin", user=user1)
+    #     session.add_all([user1, profile1])
     #     session.commit()
-    with Session(engine) as session:
-        stmt = select(User).where(User.name.in_(["ramses", "antonio"]))
 
-        for user in session.scalars(stmt):
-            print(user)
+    # select user where id == 1
+    # with Session(engine) as session:
+    #     stmt = select(User).where(User.id == 1)
+    #     user = session.execute(statement=stmt).scalar_one()
+    #     print(Style.GREEN + f"User Name:{user.name} and Profile: {user.profile.name}")
+    #     print(Style.WHITE)
+
+    #  TODO: Data Manipulation with the ORM
 
 
 if __name__ == "__main__":
